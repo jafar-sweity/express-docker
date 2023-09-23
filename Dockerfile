@@ -6,10 +6,10 @@ WORKDIR /usr/app
 
 # Copy only two files to the image
 COPY package.json package-lock.json ./
+RUN apk add curl
 
 # Execute a command while building the container
 RUN npm ci
-RUN apk add curl
 # Now copy the project files
 ADD . . 
 # Build the app
