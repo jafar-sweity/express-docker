@@ -18,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Set image version (tag)
-      id : image_version
+      id: image_version
       run: echo "gitsha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
     - name: login to Registry
       uses: docker/login-action@v3
@@ -28,15 +28,15 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag ghcr.io/${{ github.actor }}/express-docker:${{ steps.image_version.outputs.gitsha }}
-    - name : Publish docker image 
-      run : docker push ghcr.io/${{ github.actor }}/express-docker:${{ steps.image_version.outputs.gitsha }}
-    - name : configure docker host 
+    - name: Publish docker image 
+      run: docker push ghcr.io/${{ github.actor }}/express-docker:${{ steps.image_version.outputs.gitsha }}
+    - name: configure docker host 
       uses: khaledez/configure-docker-host@v1
       with:
-        host : 13.40.154.22
-        user : github
-        ssh-private-key: : ${{ secrets.DEPLOYMENT_KEY }}
-    - name : deploy
+        host: 13.40.154.22
+        user: github
+        ssh-private-key: ${{ secrets.DEPLOYMENT_KEY }}
+    - name: deploy
       run: docker compose -f docker-compose-prod.yml up -d
       env: 
         DB_PASSWORD:${{ secrets.DB_PASSWORD}} 
