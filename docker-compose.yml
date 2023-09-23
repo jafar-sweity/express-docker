@@ -17,16 +17,18 @@ services:
       retries: 10
 
   app:
-    image: ghcr.io/jafar-sweity/express-docker:426f3ea
-    restart: always
+    profiles:
+      - in_docker
+    container_name: express-docker
+    build: .
     environment:
       - PORT=80
-      - DB_HOST=mysql
+      - DB_HOST=db
       - DB_USER=root
       - DB_PASSWORD=$DB_PASSWORD
       - DB_NAME=express-docker
     ports:
-      - "80:80"
+      - "3000:80"
     depends_on:
       mysql:
         condition: service_healthy

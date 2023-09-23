@@ -9,10 +9,12 @@ COPY package.json package-lock.json ./
 
 # Execute a command while building the container
 RUN npm ci
-RUN apk add curl
+
+
 # Now copy the project files
 ADD . . 
 # Build the app
+RUN apl add curl
 RUN npm run build
 
 HEALTHCHECK --interval=10s --timeout=3s \
