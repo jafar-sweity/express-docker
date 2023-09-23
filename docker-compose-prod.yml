@@ -20,15 +20,14 @@ services:
     restart: always
     environment:
       - PORT=80
-      - DB_HOST=db
+      - DB_HOST=mysql
       - DB_USER=root
       - DB_PASSWORD=$DB_PASSWORD
       - DB_NAME=express-docker
-  ports:
-    - "80:80"
-  depends_on:
-    mysql:
-      condition: service_healthy
-
+    ports:
+      - "80:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
 volumes:
   db-data:
